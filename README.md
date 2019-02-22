@@ -141,6 +141,46 @@ See also:
 - https://generatewp.com/how-to-use-transients-to-speed-up-wordpress-menus/
 - https://vip-svn.wordpress.com/plugins/cache-nav-menu/cache-nav-menu.php
 
+## Add This Class in Style.css
+
+.dropdown:hover .dropdown-menu {
+     display: block;
+}
+
+## Here, is an extension to just make the dropdown work for responsive site
+
+CSS change to @media (min-width: 768px):
+
+@media(min-width: 768px){
+     .dropdown:hover .dropdown-menu {
+           display: block;
+     }
+}
+
+## Then in a jQuery file ( below block of code removes the top level link clickable in mobile view )
+
+
+  // Bootstrap menu magic
+  $(window).resize(function() {
+    if ($(window).width() < 768) {
+      $(".dropdown-toggle").attr('data-toggle', 'dropdown');
+    } else {
+      $(".dropdown-toggle").removeAttr('data-toggle dropdown');
+    }
+  });
+
+## If, in case any one still needs the top level drop down menu link clickable in mobile view, below is the code to make it clickable
+
+  // Bootstrap menu magic
+  if($(window).width() < 767) {
+     $(".dropdown-toggle").attr('data-toggle', 'dropdown');
+
+   $('.dropdown').on('show.bs.dropdown', function () {
+   $(this).siblings('.open').removeClass('open').find('a.dropdown-toggle').attr('data-toggle', 'dropdown');
+   $(this).find('a.dropdown-toggle').removeAttr('data-toggle');
+     });
+  } 
+
 ### Extras
 
 This script included the ability to use Bootstrap nav link mods in your menus through the WordPress menu UI. Disabled links, dropdown headers and dropdown dividers are supported. Additionally icon support is built-in for Glyphicons and Font Awesome (note: you will need to include the icon stylesheets or assets separately).
